@@ -119,7 +119,7 @@ app.get('/api/auth-url', (req, res) => {
 app.get('/oauth2callback', async (req, res) => {
   const code = req.query.code;
   if (!code) {
-    return res.redirect('http://localhost:5173?auth=error&reason=no_code');
+    return res.redirect('https://carbon-coach-mocha.vercel.app/?auth=error&reason=no_code');
   }
 
   const config = getConfig();
@@ -133,10 +133,10 @@ app.get('/oauth2callback', async (req, res) => {
     const { tokens } = await oauth2Client.getToken(code);
     saveConfig({ googleTokens: tokens });
     console.log('Google API tokens exchanged and saved successfully.');
-    res.redirect('http://localhost:5173?auth=success');
+    res.redirect('https://carbon-coach-mocha.vercel.app/?auth=success');
   } catch (error) {
     console.error('Error exchanging code for tokens:', error);
-    res.redirect(`http://localhost:5173?auth=error&reason=${encodeURIComponent(error.message)}`);
+    res.redirect(`https://carbon-coach-mocha.vercel.app/?auth=error&reason=${encodeURIComponent(error.message)}`);
   }
 });
 
