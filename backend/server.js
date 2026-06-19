@@ -19,10 +19,15 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(cors({
-  origin: ['https://carbon-coach-mocha.vercel.app/', 'https://carbon-coach-backend.onrender.com/'],
+  origin: ['https://carbon-coach-mocha.vercel.app', 'https://carbon-coach-backend.onrender.com'],
   credentials: true
 }));
 app.use(express.json());
+
+// Root health check
+app.get('/', (req, res) => {
+  res.send('Carbon Coach Backend is running!');
+});
 
 // Get safe config (hiding secrets)
 app.get('/api/config', (req, res) => {
