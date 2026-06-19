@@ -7,9 +7,8 @@
  * @returns {Promise<any>} Response JSON data
  */
 export async function apiRequest(endpoint, options = {}) {
-  // Use VITE_API_URL if set, otherwise fallback to the Render backend in production, or empty string (local proxy) in dev
-  const fallbackUrl = import.meta.env.DEV ? '' : 'https://carbon-coach-backend.onrender.com';
-  const baseUrl = import.meta.env.VITE_API_URL || fallbackUrl;
+  // Use VITE_API_URL if set, otherwise fallback to empty string (same domain)
+  const baseUrl = import.meta.env.VITE_API_URL || '';
   const url = `${baseUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
   
   const headers = {

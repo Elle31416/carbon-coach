@@ -1,5 +1,7 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import cron from 'node-cron';
 import { google } from 'googleapis';
 import { 
@@ -24,10 +26,11 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Root health check
-app.get('/', (req, res) => {
-  res.send('Carbon Coach Backend is running!');
-});
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve static frontend files from dist directory
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 // Get safe config (hiding secrets)
 app.get('/api/config', (req, res) => {
@@ -119,7 +122,7 @@ app.get('/api/auth-url', (req, res) => {
 app.get('/oauth2callback', async (req, res) => {
   const code = req.query.code;
   if (!code) {
-    return res.redirect('https://carbon-coach-mocha.vercel.app/?auth=error&reason=no_code');
+    return res.redirect('/?auth=error&reason=no_code');
   }
 
   const config = getConfig();
@@ -133,10 +136,10 @@ app.get('/oauth2callback', async (req, res) => {
     const { tokens } = await oauth2Client.getToken(code);
     saveConfig({ googleTokens: tokens });
     console.log('Google API tokens exchanged and saved successfully.');
-    res.redirect('https://carbon-coach-mocha.vercel.app/?auth=success');
+    res.redirect('/?auth=success');
   } catch (error) {
     console.error('Error exchanging code for tokens:', error);
-    res.redirect(`https://carbon-coach-mocha.vercel.app/?auth=error&reason=${encodeURIComponent(error.message)}`);
+    res.redirect(`/?auth=error&reason=${encodeURIComponent(error.message)}`);
   }
 });
 
@@ -409,6 +412,11 @@ function setupMorningCron() {
 
 // Start cron scheduler
 setupMorningCron();
+
+// Catch-all route for React SPA routing
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
 
 app.listen(PORT, () => {
   console.log(`Carbon Coach Backend running on port ${PORT}`);

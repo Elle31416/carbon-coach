@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "build": "npm --prefix frontend install && npm --prefix frontend run build && npm --prefix backend install",
+    "start": "npm --prefix backend start",
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:backend": "npm --prefix backend run dev",
     "dev:frontend": "npm --prefix frontend run dev"
