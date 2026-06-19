@@ -4,6 +4,7 @@ import Header from './components/Header';
 import ChatPanel from './components/ChatPanel';
 import InputBar from './components/InputBar';
 import Sidebar from './components/Sidebar';
+import { apiRequest } from './utils/api';
 
 export default function App() {
   return (
@@ -63,8 +64,7 @@ function AppContent() {
 
   const handleConnectGoogle = async () => {
     try {
-      const res = await fetch('/api/auth-url');
-      const data = await res.json();
+      const data = await apiRequest('/api/auth-url');
       if (data.url) {
         window.location.href = data.url;
       } else {
@@ -78,8 +78,7 @@ function AppContent() {
   const handleDisconnectGoogle = async () => {
     if (!window.confirm('Disconnect from Google APIs?')) return;
     try {
-      const res = await fetch('/api/disconnect-google', { method: 'POST' });
-      const data = await res.json();
+      const data = await apiRequest('/api/disconnect-google', { method: 'POST' });
       if (data.success) {
         alert('Google account disconnected.');
         window.location.reload();
