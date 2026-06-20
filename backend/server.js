@@ -21,7 +21,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(cors({
-  origin: ['https://carbon-coach-mocha.vercel.app', 'https://carbon-coach-backend.onrender.com'],
+  origin: ['https://carbon-coach-mocha.vercel.app', 'https://carbon-coach-1-3hu1.onrender.com'],
   credentials: true
 }));
 app.use(express.json());

@@ -16,7 +16,7 @@ if (!fs.existsSync(CONFIG_FILE)) {
     googleClientId: '',
     googleClientSecret: '',
     googleApiKey: '',
-    googleRedirectUri: 'https://carbon-coach-backend.onrender.com/oauth2callback',
+    googleRedirectUri: 'https://carbon-coach-1-3hu1.onrender.com/oauth2callback',
     homeLocation: 'San Francisco, CA',
     wakeupTime: '07:00', // HH:MM
     firebaseConfig: {
