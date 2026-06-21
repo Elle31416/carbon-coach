@@ -275,8 +275,9 @@ function AppContent() {
               
               {/* LLM Key */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <label style={{ fontSize: '13px', fontWeight: 500, color: 'var(--carbon-text-hi)' }}>Gemini API Key</label>
+                <label htmlFor="gemini-api-key" style={{ fontSize: '13px', fontWeight: 500, color: 'var(--carbon-text-hi)' }}>Gemini API Key</label>
                 <input
+                  id="gemini-api-key"
                   type="password"
                   value={settingsForm.geminiApiKey}
                   onChange={(e) => setSettingsForm({ ...settingsForm, geminiApiKey: e.target.value })}
@@ -296,8 +297,9 @@ function AppContent() {
               {/* Home and Time Settings */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontSize: '13px', fontWeight: 500, color: 'var(--carbon-text-hi)' }}>Home Location</label>
+                  <label htmlFor="home-location" style={{ fontSize: '13px', fontWeight: 500, color: 'var(--carbon-text-hi)' }}>Home Location</label>
                   <input
+                    id="home-location"
                     type="text"
                     value={settingsForm.homeLocation}
                     onChange={(e) => setSettingsForm({ ...settingsForm, homeLocation: e.target.value })}
@@ -314,8 +316,9 @@ function AppContent() {
                   />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontSize: '13px', fontWeight: 500, color: 'var(--carbon-text-hi)' }}>Wakeup Time</label>
+                  <label htmlFor="wakeup-time" style={{ fontSize: '13px', fontWeight: 500, color: 'var(--carbon-text-hi)' }}>Wakeup Time</label>
                   <input
+                    id="wakeup-time"
                     type="time"
                     value={settingsForm.wakeupTime}
                     onChange={(e) => setSettingsForm({ ...settingsForm, wakeupTime: e.target.value })}
@@ -664,8 +667,9 @@ function AppContent() {
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <label style={{ fontSize: '13px', color: 'var(--carbon-text-mid)', fontWeight: 500 }}>Select Date:</label>
+                  <label htmlFor="history-date" style={{ fontSize: '13px', color: 'var(--carbon-text-mid)', fontWeight: 500 }}>Select Date:</label>
                   <input
+                    id="history-date"
                     type="date"
                     value={activeDate}
                     onChange={(e) => setActiveDate(e.target.value)}

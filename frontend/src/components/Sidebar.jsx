@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, memo } from 'react';
 import { CarbonContext } from '../context/CarbonContext';
 import CarbonGauge from './CarbonGauge';
 import EmissionBreakdown from './EmissionBreakdown';
 import QuickTips from './QuickTips';
 
-export default function Sidebar() {
+const Sidebar = memo(function Sidebar() {
   const { footprint } = useContext(CarbonContext);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -54,4 +54,6 @@ export default function Sidebar() {
       </div>
     </aside>
   );
-}
+});
+
+export default Sidebar;

@@ -1,5 +1,9 @@
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import hpp from 'hpp';
+import compression from 'compression';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import cron from 'node-cron';
@@ -20,11 +24,25 @@ import { generateMorningQuestion, handleChatSession } from './coach.js';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+app.disable('x-powered-by');
+
+app.use(helmet({
+  contentSecurityPolicy: false,
+}));
+app.use(compression());
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 200,
+});
+app.use(limiter);
+
 app.use(cors({
   origin: ['https://carbon-coach-mocha.vercel.app', 'https://carbon-coach-1-3hu1.onrender.com'],
   credentials: true
 }));
 app.use(express.json());
+app.use(hpp());
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -418,6 +436,10 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`Carbon Coach Backend running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`Carbon Coach Backend running on port ${PORT}`);
+  });
+}
+
+export default app;
