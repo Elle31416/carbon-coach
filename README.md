@@ -12,7 +12,7 @@
 
 **Carbon Coach** is a full-stack web app that combines your Google Calendar, your Gmail receipts, an emissions model, and Google's Gemini AI into a daily sustainability coach. Each morning it scans your scheduled travel *and* your inbox — ride receipts, flight confirmations, food delivery orders, and retail purchases — to estimate the day's CO₂e impact, then opens a chat where the AI coach nudges you toward lower-carbon alternatives — walking instead of driving, transit instead of rideshare, a plant-based meal instead of beef — and automatically updates your footprint when you commit to a change. Everything is persisted to **Firebase Firestore**, with a local-JSON fallback for development.
 
-🔗 **Live demo:** [carbon-coach-mocha.vercel.app](https://carbon-coach-mocha.vercel.app)
+🔗 **Live demo:** [https://carbon-coach-1-3hu1.onrender.com/]
 
 ---
 
