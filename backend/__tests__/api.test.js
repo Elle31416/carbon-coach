@@ -1,9 +1,8 @@
-import request from 'supertest';
-import app from '../server.js';
+import { jest } from '@jest/globals';
 
-// Mock db.js
-jest.mock('../db.js', () => ({
-  getConfig: jest.fn(() => ({
+// Mock db.js using ES module mocking
+jest.unstable_mockModule('../db.js', () => ({
+  getConfig: () => ({
     geminiApiKey: 'mock-key',
     googleClientId: '',
     googleClientSecret: '',
@@ -13,15 +12,19 @@ jest.mock('../db.js', () => ({
     wakeupTime: '08:00',
     firebaseConfig: {},
     googleTokens: null
-  })),
-  isUsingFirestore: jest.fn(() => false),
-  saveConfig: jest.fn(),
-  getFootprint: jest.fn(),
-  saveFootprint: jest.fn(),
-  getFootprintsHistory: jest.fn(),
-  getChatHistory: jest.fn(),
-  saveChatHistory: jest.fn(),
+  }),
+  isUsingFirestore: () => false,
+  saveConfig: () => {},
+  getFootprint: () => {},
+  saveFootprint: () => {},
+  getFootprintsHistory: () => {},
+  getChatHistory: () => {},
+  saveChatHistory: () => {}
 }));
+
+// Dynamically import app and supertest after mocking
+const { default: request } = await import('supertest');
+const { default: app } = await import('../server.js');
 
 describe('Backend API Tests', () => {
   it('GET /api/config should return obfuscated config', async () => {
